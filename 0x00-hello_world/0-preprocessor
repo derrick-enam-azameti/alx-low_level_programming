@@ -1,0 +1,2 @@
+#!/bin/bash
+$CFILE -E -o c
