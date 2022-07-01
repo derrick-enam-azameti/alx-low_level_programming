@@ -2,14 +2,15 @@
 #include <stdlib.h>
 #include <time.h>
 
-/*
+/**
  * main - Entry point
- * description: Get a random number and print the number if positive,
+ *
+ * Description: Get a random number and print the number if positive,
  * negative, or zero.
+ *
  * Return: 0
  */
-
-int main (void)
+int main(void)
 {
 	int n;
 
