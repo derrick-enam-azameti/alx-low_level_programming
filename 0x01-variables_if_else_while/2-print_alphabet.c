@@ -3,7 +3,7 @@
 
 /**
  * main - main block
- * Description: program that prints the alphabet in lowercase, followed by a new line.
+ * Description: program that prints the alphabet in lowercase, then a new line.
  * Return: 0
  */
 int main(void)
