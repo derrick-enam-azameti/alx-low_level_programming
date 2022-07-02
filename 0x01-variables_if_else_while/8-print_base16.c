@@ -2,10 +2,10 @@
 #include <stdlib.h>
 
 /**
- * main - main block
- * Description: prints all
- * Return: 0
- */
+* main - main block
+* Description: prints all
+* Return: 0
+*/
 int main(void)
 {
 	char d = '0';
