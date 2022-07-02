@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 /**
  * main - main entry
  * Description: print numberz
@@ -6,14 +7,13 @@
  */
 int main(void)
 {
-	int n = 0;
-	
-	while (n < 10)
-	{
-		putchar(48 + n);
-		n++;
-	}
+	int c = 0;
 
+	while (c < 10)
+	{
+		putchar(48 + c);
+		c++;
+	}
 	putchar('\n');
 	return (0);
 }
