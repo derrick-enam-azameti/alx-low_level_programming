@@ -8,26 +8,15 @@
  */
 int main(void)
 {
-	int c;
-	int d = 0;
+	int dg1, dg2;
 
-	while (d <= 9)
+	for (dg1 = 0; dg1 < 9; dg1++)
 	{
-		c = 0;
-		while (c <= 9)
+		for (dg2 = dg1 +1; dg2 < 10; dg2++)
 		{
-			putchar('0' + d);
-			putchar('0' + c);
-
-			if (c + d != 18)
-			{
-				putchar(',');
-				putchar(' ');
-			}
-			c++;
+			putchar((dg1 % 10) + '0');
+			putchar((dg2 % 10) + '0');
 		}
-		d++;
 	}
-	putchar('\n');
 	return (0);
 }
