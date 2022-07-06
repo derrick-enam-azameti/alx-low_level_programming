@@ -1,6 +1,7 @@
 #include "main.h"
 /**
  * print_times_table - prints times table for numbers 0 to 14
+ * @n: times table to calculate
  * Return: 0
  */
 void print_times_table(int n)
