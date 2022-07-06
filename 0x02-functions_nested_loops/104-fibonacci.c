@@ -7,7 +7,8 @@
  */
 int main(void)
 {
-	unsigned long int fb1 = 0, bn1= 1, fb2 = 0, bn2 = 2;
+	unsigned long int fb1 = 0, fb2 = 0;
+	unsigned long int bn1 = 1, bn2 = 2;
 	unsigned long int h1, h2, h3;
 	int count;
 
@@ -16,7 +17,7 @@ int main(void)
 	{
 		if (bn1 + bn2 > LARGEST || fb2 > 0 || fb1 > 0)
 		{
-			h1 = (bn1 +bn2) / LARGEST;
+			h1 = (bn1 + bn2) / LARGEST;
 			h2 = (bn1 + bn2) % LARGEST;
 			h3 = fb1 + fb2 + h1;
 			fb1 = fb2, fb2 = h3;
