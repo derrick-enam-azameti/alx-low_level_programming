@@ -23,7 +23,7 @@ void print_times_table(int n)
  * putformat - character formatter
  * Return: 0
  */
-vooid putformat(int n)
+void putformat(int n)
 {
 	if (n <= 9)
 	{
