@@ -1,9 +1,8 @@
 #include "main.h"
-#include <stdio.h>
 
 /**
- * main - check the code
- *
+ *_abs - return abs value
+ * @n: number - integer
  * Return: 0
  */
 int _abs(int n)
