@@ -24,7 +24,7 @@ void print_number(int n)
 	while (j < i)
 	{
 		_putchar('0' + n / d);
-		n = n- (n / d) * d;
+		n = n - (n / d) * d;
 		d = d / 10;
 		j++;
 	}
