@@ -1,29 +1,37 @@
-#include <stdio.h>
+#include "main.h"
 /**
- * _atoi - converts integer to string
- * @s: input string
- * Return: integer
+ * _atoi - string to integer
+ * @s: char array string
+ * Return: first integer
  */
 
 int _atoi(char *s)
 {
-	int sign = 1;
-	unsigned int total = 0;
-	char null_flag = 0;
+	int i;
+	int h, p;
 
-	while (*s)
+	h = 0;
+	p = -1;
+
+	for (i = 0; s[i] != '\0'; i++)
 	{
-		if (*s == '-')
-			sign *= -1;
-
-		if (*s >= '0' && *s <= '9')
+		if (s[i] == '-')
 		{
-			null_flag = 1;
-			total = total * 10 + *s - '0';
+			p *= -1;
 		}
-		else if (sign < 0)
-			total = (-total);
+		if (s[i] > 47 && s[i] < 58)
+		{
+			if (h < 0)
+				h = (h * 10) - (s[i] - '0');
+			else
+				h = (s[i] - '0') * -1;
 
-		return (total);
+			if (s[i + 1] < 48 || s[i + 1] > 57)
+				break;
+		}
 	}
+	if (p < 0)
+		h *= -1;
+
+	return (h);
 }
