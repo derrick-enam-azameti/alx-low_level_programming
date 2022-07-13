@@ -1,7 +1,8 @@
 #include <stdio.h>
+
 /*
  * main - Entry point
- * Description: modified function
+ * Description: makes use of pointers
  * Return: 0
  */
 
