@@ -1,9 +1,4 @@
 #include <stdio.h>
-/*
- * main - Entry point
- * Description: modified function
- * Return: 0
- */
 
 int main(void)
 {
