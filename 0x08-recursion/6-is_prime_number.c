@@ -1,5 +1,7 @@
 #include "main.h"
 #include <stdio.h>
+int check_prime(int num, int div);
+
 /**
  * is_prime_number - checks if a number is prime
  * @n: int
@@ -7,21 +9,30 @@
  */
 int is_prime_number(int n)
 {
-	return (check_prime(n, 2));
+	int div = 2;
+
+	if (n <= 1)
+		return (0);
+
+	if (n <= 3)
+		return (1);
+
+	return (check_prime(n, div));
 }
 
 /**
- * check_prime - checks all numbers < n if they can divide it
- * @n: int
- * @resp: int
- * Return: int
+ * check_prime - checks if num is divisible
+ * @num: int
+ * @div: result
+ * Return: 0 or 1
  */
-int check_prime(int n, int resp)
+int check_prime(int num, int div)
 {
-	if (resp >= n && n > 1)
-		return (1);
-	else if (n % resp == 0 || n <= 1)
+	if (num % div == 0)
 		return (0);
-	else
-		return (check_prime(n, resp + 1));
+
+	if (div == num / 2)
+		return (1);
+
+	return (check_prime(num, div + 1));
 }
