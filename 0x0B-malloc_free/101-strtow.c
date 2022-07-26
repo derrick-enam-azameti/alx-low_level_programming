@@ -1,100 +1,49 @@
 #include "main.h"
+#include <stdlib.h>
 /**
- * _strlen - return the length of a string
- * @s: string
- * Return: length of string
- */
-int _strlen(char *s)
-{
-	int size = 0;
-
-	for (; s[size] != '\0'; size++)
-		;
-	return (size);
-}
-
-/**
- * *str_addChar - concatenates two strings
- * @str: string
- * @c: char
- * Return: pointer
- */
-char *str_addChar(char *str, char c)
-{
-	int size, i;
-	char *m;
-
-	size = _strlen(str);
-	m = malloc((size + 1) * sizeof(char) + 1);
-	if (m == 0)
-		return (0);
-
-	for (i = 0; i <= size; i++)
-		m[i] = str[i];
-
-	m[i + 1] = c;
-	m[i + 2] = '\0';
-
-	return (m);
-}
-
-/**
- * nbr_spaces - returns the number of occurance of a string
- * @s: string to check
- * Return: int
- */
-unsigned int nbr_spaces(char *s)
-{
-	int i, cmpt = 0;
-
-	for (i = 0; s[i + 1] != '\0'; i++)
-	{
-		if (s[i] == ' ' && s[i + 1] != ' ')
-			cmpt++;
-	}
-	return (cmpt + 1);
-}
-
-/**
- * **strtow - split a sentence into multiple words.
- * @str: string input
- * Return: tokens
+ * **strtow - splits a string into words
+ * @str: input
+ * Return: words or NULL
  */
 char **strtow(char *str)
 {
-	int i;
-	int spaces = nbr_spaces(str);
-	char **tokens = NULL;
-	char *token;
-	int checkingSpace = 0;
-	int word = 0;
+	char **array;
+	int i = 0, j, m, k = 0, len = 0, count = 0;
 
-	if (!tokens)
+	if (str == NULL || *str == '\0')
+		return (NULL);
+	for (; str[i]; i++)
 	{
-		printf("Failed");
-		return (0);
+		if ((str[i] != ' ' || *str != '\t') &&
+				((str[i + 1] == ' ' || str[i + 1] == '\t') || str[i + 1] == '\n'))
+			count++;
 	}
-
-	for (i = 0; str[i] != '\0'; i++)
+	if (count == 0)
+		return (NULL);
+	array = malloc(sizeof(char *) * (count + 1));
+	if (array == NULL)
+		return (NULL);
+	for (i = 0; str[i] != '\0' && k < count; i++)
 	{
-		if (str[i] == ' ')
+		if (str[i] != ' ' || str[i] != '\t')
 		{
-			if (checkingSpace == 0)
+			len = 0;
+			j = i;
+			while ((str[j] != ' ' || str[j] != '\t') && str[j] != '\0')
+				j++, len++;
+			array[k] = malloc((len + 1) * sizeof(char));
+			if (array[k] == NULL)
 			{
-				word++;
-				checkingSpace = 1;
+				for (k = k - 1; k >= 0; k++)
+					free(array[k]);
+				free(array);
+				return (NULL);
 			}
-		}
-		else
-		{
-			token = tokens[word];
-			free(tokens[word]);
-			str_addChar(token, str[i]);
-			checkingSpace = 0;
+			for (m = 0; m < len; m++, i++)
+				array[k][m] = str[i];
+			array[k++][m] = '\0';
 		}
 	}
-
-	tokens[i] = NULL;
-
-	return (tokens);
+	array[k] = NULL;
+	return (array);
 }
