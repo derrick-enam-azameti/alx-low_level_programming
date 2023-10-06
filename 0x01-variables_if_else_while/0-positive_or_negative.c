@@ -3,10 +3,10 @@
 #include <stdio.h>
 
 /**
- * main - Entry point of the programi
+ * main - Entry point of the program
  *
- * Description: Assigns a random number to n 
- * and indicate whether it is positive, negative,
+ * Description: Assigns a random number to
+ * 'n' and indicates whether it is positive, negative,
  * or zero.
  *
  * Return: 0 (Success)
