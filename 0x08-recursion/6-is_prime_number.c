@@ -15,7 +15,7 @@ int prime_func(int a, int b)
 	else if ((b * b) > a)
 		return (1);
 	else
-		return (prime_func(x, (y + 1)));
+		return (prime_func(a, (b + 1)));
 }
 
 /**
