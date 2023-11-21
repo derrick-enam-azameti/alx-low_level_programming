@@ -9,26 +9,26 @@
  */
 listint_t *add_nodeint_end(listint_t **head, const int n)
 {
-	listint_t *m;
-	listint_t *p = *head;
+	listint_t *new_node;
+	listint_t *current = *head;
 
-	m = malloc(sizeof(listint_t));
-	if (!m)
-		return (NULL);
+	new_node = (listint_t *)malloc(sizeof(listint_t));
 
-	m->n = n;
-	m->next = NULL;
+	if (new_node == NULL)
+		return (NULL); /* Allocation failed */
+
+	new_node->n = n;
+	new_node->next = NULL;
 
 	if (*head == NULL)
 	{
-		*head = m;
-		return (m);
+		*head = new_node;
+		return (new_node);
 	}
 
-	while (p->next)
-		p = p->next;
+	while (current->next != NULL)
+		current = current->next;
 
-	p->next = m;
-
-	return (m);
+	current->next = new_node;
+	return (new_node);
 }
