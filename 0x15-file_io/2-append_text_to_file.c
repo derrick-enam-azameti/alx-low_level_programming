@@ -11,21 +11,24 @@
  */
 int append_text_to_file(const char *filename, char *text_content)
 {
-	int file_descriptor = open(filename, O_WRONLY | O_APPEND);
+	int file_descriptor = 0;
 	int length = 0;
-	int write_status = write(file_descriptor, text_content, length);
+	int write_status = 0;
 
 	if (filename == NULL)
 		return (-1);
 
+	open(filename, O_WRONLY | O_APPEND);
 	if (file_descriptor == -1)
 		return (-1);
 
 	if (text_content != NULL)
 	{
+		length = 0;
 		while (text_content[length])
 			length++;
 
+		write(file_descriptor, text_content, length);
 		close(file_descriptor);
 
 		if (write_status == -1)
