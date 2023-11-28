@@ -4,71 +4,116 @@
 
 #define BUFFER_SIZE 1024
 
+char *create_buffer(void);
+void close_file(int fd);
+void copy_file(const char *file_from, const char *file_to);
+
 /**
- * copy_file - Copies the contents of one file to another.
- * @source_file: The name of the source file.
- * @destination_file: The name of the destination file.
+ * create_buffer - allocates 1024 bytes for a buffer
+ * @file: name of file buffer
  *
- * Return: 0 on success, otherwise appropriate error code.
+ * Return: pointer to the newly-allocated buffer
  */
-int copy_file(const char *source_file, const char *destination_file)
+char *create_buffer(void)
 {
-	FILE *source, *destination;
-	char buffer[BUFFER_SIZE];
-	size_t bytes_read;
+	char *buffer = malloc(BUFFER_SIZE * sizeof(char));
 
-	source = fopen(source_file, "rb");
-	if (source == NULL)
+	if (buffer == NULL)
 	{
-		fprintf(stderr, "Error: Can't read from file %s\n", source_file);
-		return (98);
+		perror("Error: Unable to allocate buffer");
+		exit(EXIT_FAILURE);
 	}
-
-	destination = fopen(destination_file, "wb");
-	if (destination == NULL)
-	{
-		fprintf(stderr, "Error: Can't write to %s\n", destination_file);
-		fclose(source);
-		return (99);
-	}
-
-	while ((bytes_read = fread(buffer, 1, BUFFER_SIZE, source)) > 0)
-	{
-		if (fwrite(buffer, 1, bytes_read, destination) != bytes_read)
-		{
-			fprintf(stderr, "Error: Can't write to %s\n", destination_file);
-			fclose(source);
-			fclose(destination);
-			return (99);
-		}
-	}
-
-	fclose(source);
-	fclose(destination);
-
-	return (0);
+	return (buffer);
 }
 
 /**
- * main - Entry point
+ * close_file - Closes file descriptors.
+ * @fd: The file descriptor to be closed.
+ */
+void close_file(int fd)
+{
+	if (close(fd) == -1)
+	{
+		perror("Error: Unable to close file descriptor");
+		exit(EXIT_FAILURE);
+	}
+}
+
+/**
+ * copy_file - copies content of a file to another file
+ * @file_from: file to copy from
+ * @file_to: file to copy to
+ *
+ * Return: Always 0
+ */
+void copy_file(const char *file_from, const char *file_to)
+{
+	int from, to, r, w;
+	char *buffer;
+
+	buffer = create_buffer();
+
+	from = open(file_from, O_RDONLY);
+	if (from == -1)
+	{
+		perror("Error: Unable to open source file");
+		free(buffer);
+		exit(EXIT_FAILURE);
+	}
+
+	to = open(file_to, O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	if (to == -1)
+	{
+		perror("Error: Unable to open or create destination file");
+		free(buffer);
+		close_file(from);
+		exit(EXIT_FAILURE);
+	}
+
+	do {
+		r = read(from, buffer, BUFFER_SIZE);
+		if (r == -1)
+		{
+			perror("Error: Unable to read from source file");
+			free(buffer);
+			close_file(from);
+			close_file(to);
+			exit(EXIT_FAILURE);
+		}
+
+		w = write(to, buffer, r);
+		if (w == -1)
+		{
+			perror("Error: Unable to write to destination file");
+			free(buffer);
+			close_file(from);
+			close_file(to);
+			exit(EXIT_FAILURE);
+		}
+
+	} while (r > 0);
+
+	free(buffer);
+	close_file(from);
+	close_file(to);
+}
+
+/**
+ * main - entry point
  * @argc: argc
  * @argv: argv
  *
- * Return: result
-*/
+ * Return: Success (0), Error (1)
+ */
 int main(int argc, char *argv[])
 {
-	const char *source_file = argv[1];
-	const char *destination_file = argv[2];
-	int result;
-
 	if (argc != 3)
 	{
-		fprintf(stderr, "Usage: cp file_from file_to\n");
-		return (97);
+		fprintf(stderr, "Usage: %s file_from file_to\n", argv[0]);
+		exit(EXIT_FAILURE);
 	}
 
-	result = copy_file(source_file, destination_file);
+	copy_file(argv[1], argv[2]);
 
-	return (result);
+	return (EXIT_SUCCESS);
 }
